@@ -25,6 +25,8 @@ summary(df2)
 #only mpg of 5 cars or 30% of cars
 s2 <- sample(df2$mpg, size=5, replace=F)
 s2
+df2 %>% slice_sample(n=10)
+df2 %>% slice_sample(prop=.4)
 
 #stratifiedSample-------
 df2 %>% group_by(am) %>% tally()
