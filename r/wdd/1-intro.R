@@ -17,11 +17,16 @@
 
 ## Help-------
 ?mean
+x <- c(0:10000000)
+length(x)
+xm <- mean(x)
+xm
+
 help(mean)
 
 #sample-------
 mtcars
 library(dplyr)
-mtcars %>% select(mpg, wt) %>% head()
+mtcars %>% select(mpg, wt) %>% head(n=3)
 
 #End of Topic------

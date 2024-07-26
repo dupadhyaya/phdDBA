@@ -21,14 +21,14 @@ summary(df2)
 
 #SampleDesign-------------------
 
-#simpleRandom--------
+#simple Random--------
 #only mpg of 5 cars or 30% of cars
 s2 <- sample(df2$mpg, size=5, replace=F)
 s2
 df2 %>% slice_sample(n=10)
 df2 %>% slice_sample(prop=.4)
 
-#stratifiedSample-------
+#stratified Sample-------
 df2 %>% group_by(am) %>% tally()
 df2 %>% group_by(am) %>% sample_n(size=3) # 3 rows from each am (Tx Type)
 df2 %>% group_by(am) %>% slice_sample(n=3) # 3 rows from each am (Tx Type)
@@ -61,7 +61,6 @@ unique(df2$gear)
 
 (c1 <- cluster(df2, clustername=c("gear"), size=3, method="srswor")) #3 clusters
 (c1_data = getdata(df2, c1))
-
 
 
 #https://medium.com/analytics-vidhya/sampling-methods-in-r-b3c92e580c57

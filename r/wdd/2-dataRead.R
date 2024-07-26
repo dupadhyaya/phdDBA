@@ -5,10 +5,10 @@ dir(folder1)
 
 #csv-------
 (dfcsv = read.csv(file = paste0(folder1,'fdata4CSV.csv')))
-
+dfcsv
 #excel-------
 ?readxl::read_xlsx
-(dfxl1= readxl::read_excel(path = paste0(folder1,'phdXL.xlsx'),sheet='fdata4'))
+(dfxl1= readxl::read_excel(path = paste0(folder1,'phdXL.xlsx'), sheet='fdata4'))
 
 
 #googlesheet------
