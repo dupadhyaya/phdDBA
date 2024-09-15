@@ -50,5 +50,5 @@ cor.test(df3$mpg,df3$mpg)
 
 
 #links------
-https://www.r-bloggers.com/2021/10/paired-sample-t-test-using-r/
+#https://www.r-bloggers.com/2021/10/paired-sample-t-test-using-r/
   
