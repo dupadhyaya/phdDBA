@@ -1,4 +1,6 @@
-# Sample Code for Workshop/Training
+# Sample Code for Workshop/Training - 22Mar25
+#https://github.com/dupadhyaya/phdDBA/blob/main/r/wdd/wddCode.R
+
 #R software: unfriendly but probably the best for stats https://pmc.ncbi.nlm.nih.gov/articles/PMC7063554/
 
 #0-Setup
@@ -72,13 +74,13 @@ gD1 <- ggplot(df, aes(x = Value)) +
 gD1
 
 
-#2. Hypothesis--------
+#2A. Hypothesis--------
 set.seed(123)  # for reproducibility
 scores <- rnorm(30, mean = 52, sd = 5)  # sample mean is ~52
 scores
 t.test(scores, mu = 50)
 #t = 1.9 : t-statistic
-df = 29: degrees of freedom (n − 1)
+#df = 29: degrees of freedom (n − 1)
 #p-value = 0.0584 : >  0.05 → not statistically significant  
 #Confidence Interval: The true mean is likely between 49.93 and 53.59. The 95% confidence interval includes 50
 #Conclusion: There’s no evidence that the sample mean is different from 52
@@ -103,10 +105,10 @@ plot(women$height, women$weight, main = "Height vs Weight", xlab = "Height (inch
 #Height is a highly significant predictor of weight.
 #The model fits the data very well (R² ≈ 99%).
 
-##3. Sample Size-----------
+#3. Sample Size-----------
 #2sample t-test (Independent)
 #Effect Size = 0.5 (Cohen's d (effect size). Here, 0.5 is a medium effect), Power = 0.8 (Desired power of the test: 80%. Means an 80% chance of detecting an effect if it exists.), a = 0.05 (5% chance of error); alternative = "two.sided" (Testing if the two group means are different, not just greater or less). type = "two.sample" (comparing two independent groups (e.g., treatment vs control).
-
+library(pwr)
 pwr.t.test(d = 0.5, sig.level = 0.05 , power = 0.80, alternative = "two.sided", type = "two.sample")
 
 #n = 63.77: Need about 64 participants in each group.
