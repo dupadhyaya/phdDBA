@@ -16,9 +16,19 @@ class <- sample(10:12, 100, replace = T)
 section <- sample(LETTERS[1:3], 100, replace = T)
 city <- sample(c('Mumbai', 'Delhi', 'Chennai','Dubai', 'Muscat'), 100, replace = T)
 students <- data.frame(school, rollno, class, section, name, gender, age, maths, science, city)
-head(students)
+head(students,3)
 names(students)
+
+students %>% group_by(class, section) %>% summarise(n=n(), mean_age = mean(age), mean_maths = mean(maths), mean_science = mean(science))
+
+
+#-----------
+mean(students$age)
+mean(students$maths)
+Mode(students$maths)
 table(students$school)
+colMeans(students[,c('age', 'maths', 'science')])
+
 write.csv(students, 'students.csv', row.names = F)
 #simplerandom--------
 
