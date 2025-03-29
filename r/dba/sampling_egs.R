@@ -19,7 +19,7 @@ students <- data.frame(school, rollno, class, section, name, gender, age, maths,
 head(students)
 names(students)
 table(students$school)
-
+write.csv(students, 'students.csv', row.names = F)
 #simplerandom--------
 
 #simple random sample of 10 students

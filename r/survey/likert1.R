@@ -3,7 +3,7 @@
 pacman::p_load(tidyverse, scales, likert, LikertMakeR, ggplot2, ggthemes, cowplot, psych)
 #Likert data—properly pronounced like “LICK-ert”—are ordered responses to questions or ratings.  Responses could be descriptive words, such as “agree”, “neutral”, or “disagree,” or numerical, such as “On a scale of 1 to 5, where 1 is ‘not interested’ and 5 is ‘very interested’…”  Likert data is commonly collected from surveys evaluating education programs, as well in a variety of opinion surveys and social science surveys.
 #https://rcompanion.org/handbook/E_01.html
-
+?LikertMakeR
 
 #Case-1----------
 # 1 Teacher, 10 Students, 1 numerical rating
@@ -11,6 +11,7 @@ df1 <- data.frame( teacher = "Mr. Dhiraj",  sname=paste0('student', str_pad(1:10
 df1
 df1B <- df1 %>% mutate(oRating = factor(rating, ordered=T, levels=c(1:10)))
 str(df1B)
+head(df1B)
 
 psych::headTail(df1B)
 table(df1B$oRating)
@@ -24,6 +25,7 @@ df1B %>% ggplot(., aes(x='', y=rating)) + geom_boxplot() + geom_jitter( aes(colo
 #HH package
 library(HH)
 #https://cran.r-project.org/web/packages/HH/HH.pdf
+head(df1B)
 data(ProfChal)
 head(ProfChal)
 likert(Question ~ . , ProfChal[ProfChal$Subtable=="Employment sector",], main='Is your job professionally challenging?', ylab=NULL, sub="This plot looks better in a 9in x 4in window.")
@@ -38,17 +40,17 @@ likert(Question ~ . , ProfChal[ProfChal$Subtable=="Employment sector",],
 
 ## formula method
 data(NZScienceTeaching)
-likert(Question ~ . | Subtable, data=NZScienceTeaching, ylab=NULL, scales=list(y=list(relation="free")), layout=c(1,2))
+head(NZScienceTeaching)
+?likert(Question ~ . | Subtable, data=NZScienceTeaching, ylab=NULL, scales=list(y=list(relation="free")), layout=c(1,2))
 
+?likert
 ## formula notation with expanded right-hand-side
 likert(Question ~  "Strongly disagree" + Disagree + Neutral + Agree + "Strongly agree" | Subtable, data=NZScienceTeaching,   ylab=NULL,   scales=list(y=list(relation="free")), layout=c(1,2))
 
 NZScienceTeachingLong <- reshape2::melt(NZScienceTeaching, id.vars=c("Question", "Subtable"))
 names(NZScienceTeachingLong)[3] <- "Agreement"
 head(NZScienceTeachingLong)
-likert(Question ~ Agreement | Subtable, value="value", data=NZScienceTeachingLong,
-       ylab=NULL,
-       scales=list(y=list(relation="free")), layout=c(1,2))
+likert(Question ~ Agreement | Subtable, value="value", data=NZScienceTeachingLong, ylab=NULL, scales=list(y=list(relation="free")), layout=c(1,2))
 
 ## Examples with higher-dimensional arrays.
 tmp3 <- array(1:24, dim=c(2,3,4), dimnames=list(A=letters[1:2], B=LETTERS[3:5], C=letters[6:9]))
@@ -122,12 +124,6 @@ likert(as.listOfNamedMatrices(Pop),
                   "Width is exactly 100%.", sep="\n"))
 
 data(ProfChal)
-likertMosaic(Question ~ . | Subtable, ProfChal,
-             main="Is your job professionally challenging?")
+likertMosaic(Question ~ . | Subtable, ProfChal, main="Is your job professionally challenging?")
 
-LikertPercentCountColumns(Question ~ . | Subtable, ProfChal,
-                          layout=c(1,6), scales=list(y=list(relation="free")),
-                          ylab=NULL, between=list(y=0),
-                          strip.left=strip.custom(bg="gray97"), strip=FALSE,
-                          par.strip.text=list(cex=.7),
-                          main="Is your job professionally challenging?")
+LikertPercentCountColumns(Question ~ . | Subtable, ProfChal, layout=c(1,6), scales=list(y=list(relation="free")),  ylab=NULL, between=list(y=0), strip.left=strip.custom(bg="gray97"), strip=FALSE, par.strip.text=list(cex=.7), main="Is your job professionally challenging?")
