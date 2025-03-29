@@ -48,3 +48,4 @@ api_design <- svydesign(id = ~1, strata = ~stype, weights = ~pw, data = apistrat
 # Calculate weighted descriptive statistics 
 # Calculate the weighted mean of enrollment 
 svymean(~enroll, design = api_design)  
+

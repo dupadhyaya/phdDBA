@@ -31,3 +31,4 @@ population <- rio::import("population.xlsx")
 
 ## define the number of households in each cluster
 cluster_counts <- tibble(cluster = c("village_1", "village_2", "village_3", "village_4", "village_5", "village_6", "village_7", "village_8", "village_9", "village_10"), households = c(700, 400, 600, 500, 300,  800, 700, 400, 500, 500))
+
