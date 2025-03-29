@@ -1,6 +1,7 @@
 #probability
 
 library(PASWR)
+library(prob)
 library(tidyverse)
 
 

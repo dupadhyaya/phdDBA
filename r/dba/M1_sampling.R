@@ -38,6 +38,15 @@ table(students$gender)
 students %>% group_by(gender) %>% slice_sample(prop=.1) %>% select(rollno, name, school, gender)
 
 students %>% group_by(school, class) %>% slice_sample(n=1) %>% select(rollno, name, school, class, gender)
+students
+
+library(tigerstats)
+males = subset(students, gender=='M')
+females = subset(students, gender == 'F')
+#we can take 4 from Males and 3 from females
+(M4 = popsamp(n=3, pop=males))
+(F3 = popsamp(n=4, pop=females))
+
 
 #cluster------
 (clusters <- students %>% distinct(city))
@@ -60,5 +69,23 @@ students %>% filter(gender == 'M') %>% slice_head(n = 5)  %>% select(rollno, nam
 students %>% filter(gender == 'F') %>% slice_head(n = 4) %>% select(rollno, name, school, class, gender)
 
 #snowball------
-#start with one and keep adding
-  
+#little difficult to understand
+library(snowboot)
+?artificial_networks
+net <- artificial_networks[[1]]
+net
+a <- sample_about_one_seed(net, seed = 12, n.wave = 2)
+a
+
+#sampleSize---------
+library(pwr)
+#Factors---------
+#   - Effect size (Cohen's d) = 0.5
+#   - Significance level (alpha) = 0.05
+#   - Desired power = 0.80
+#   - Alternative hypothesis: one.sample, two.sided
+
+#Example:  One-sample t-test-------
+#Input: d= 0.5, a=.05, power=0.8, alternative=two.sided, type=one.sample
+pwr.t.test(d = 0.5, sig.level = 0.05, power = 0.80, alternative = "two.sided", type = "one.sample") #n=33 samples
+#samples size-34
