@@ -1,7 +1,7 @@
 # Examples of Sampling
-
+#pl install the libraries and see that they loaded
 #library------
-pacman::p_load(randomNames, dplyr)
+pacman::p_load(randomNames, dplyr, tigerstats)
 
 #data------------
 rollno <- 1:100
@@ -31,7 +31,8 @@ names(students)
 write.csv(students, './/data/students.csv', row.names = F)
 
 #if you load the file, read it from git
-students <- read.csv('https://raw.githubusercontent.com/dupadhyaya/phdDBA/refs/heads/main/r/dba/students1.csv')
+students <- read.csv('https://raw.githubusercontent.com/dupadhyaya/phdDBA/refs/heads/main/data/students.csv')
+dim(students)
 #simplerandom--------
 
 #simple random sample of 10 students
