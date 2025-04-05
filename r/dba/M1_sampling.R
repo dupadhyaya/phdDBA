@@ -1,8 +1,7 @@
 # Examples of Sampling
 
 #library------
-library(randomNames)
-library(dplyr)
+pacman::p_load(randomNames, dplyr)
 
 #data------------
 rollno <- 1:100
@@ -28,7 +27,7 @@ mean(students$maths)
 Mode(students$maths)
 table(students$school)
 colMeans(students[,c('age', 'maths', 'science')])
-
+names(students)
 write.csv(students, './/data/students.csv', row.names = F)
 
 #if you load the file, read it from git
