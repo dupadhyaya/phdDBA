@@ -29,7 +29,10 @@ Mode(students$maths)
 table(students$school)
 colMeans(students[,c('age', 'maths', 'science')])
 
-write.csv(students, 'students.csv', row.names = F)
+write.csv(students, './/data/students.csv', row.names = F)
+
+#if you load the file, read it from git
+students <- read.csv('https://raw.githubusercontent.com/dupadhyaya/phdDBA/refs/heads/main/r/dba/students1.csv')
 #simplerandom--------
 
 #simple random sample of 10 students

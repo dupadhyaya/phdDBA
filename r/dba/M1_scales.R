@@ -54,3 +54,4 @@ marks[5]-marks[2]
 
 #Ratio Scale------
 # +above; other types of means, ratio, 
+
