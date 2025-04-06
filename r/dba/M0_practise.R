@@ -1,4 +1,4 @@
-#Fateh
+# Fateh
 x = c(1:1000) #cntrl + enter to run the code
 y <- c(100:2000)
 #x is vector
@@ -32,3 +32,15 @@ median(df$temp)
 sort(df$temp) 
 #df= read.csv(file='/Users/du/dup/analytics/projects/phdDBA/r/dba/students.csv')
 
+# Things being in Excel--------
+# avg, min, max, median, mode
+# pivot, trend analysis, 
+# formatting, report 
+# search, Top X 
+# text start, partial text
+
+#----------------
+data = read.csv('https://raw.githubusercontent.com/dupadhyaya/phdDBA/refs/heads/main/data/students.csv')
+
+head(data)
+str(data)
