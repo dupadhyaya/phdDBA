@@ -53,6 +53,9 @@ students %>% group_by(gender) %>% slice_sample(prop=.1) %>% select(rollno, name,
 students %>% group_by(school, class) %>% slice_sample(n=1) %>% select(rollno, name, school, class, gender)
 students
 
+#install tigerstats-----
+#install.packages("devtools")
+#devtools::install_github("homerhanumat/tigerstats")
 library(tigerstats)
 males = subset(students, gender=='M')
 females = subset(students, gender == 'F')
