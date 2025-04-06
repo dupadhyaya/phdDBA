@@ -1,5 +1,6 @@
 # Data Creation
-
+#install.packages("devtools")
+#devtools::install_github("homerhanumat/tigerstats")
 pacman::p_load(randomNames, dplyr, tigerstats, ggplot2)
 #data
 rollno <- 1L:100L
