@@ -16,7 +16,10 @@ names(cdone)
 (cdone2 <- cdone %>% mutate( start_time = parse_date_time(str_extract(classTiming, "^[^-]+"), orders = "I:%M%p"), end_time = parse_date_time(str_extract(classTiming, "(?<=-).+$"), orders = "I:%M%p"))  %>% mutate( dur_min = as.numeric(difftime(end_time, start_time, units = "mins")), pcount = as.integer(pcount)) %>% dplyr::select(cDate, cDay, batchID, batchSDate, course, classTiming, pcount, dur_min, claimed) %>% filter(is.na(claimed)))
 
 #summarise------
-cdoneS1 <- cdone2 %>% group_by(cDate) %>% summarise(batches=n(), batchIDs= paste(batchID, collapse = ", "), duration = max(dur_min, na.rm=T), students = sum(pcount, na.rm=T)) %>% arrange(desc(cDate)) %>% clipr::write_clip(.)
+cdoneS1 <- cdone2 %>% group_by(cDate, classTiming) %>% summarise(batches=n(), batchIDs= paste(batchID, collapse = ", "), duration = max(dur_min, na.rm=T), students = sum(pcount, na.rm=T)) %>% arrange(desc(cDate)) %>% clipr::write_clip(.)
 cdoneS1
-hrs = sum(cdoneS1$duration)/60
+cdoneS2 <- cdone2 %>% group_by(classTiming) %>% summarise(days = n_distinct(cDate) , batches=n_distinct(batchID), batchIDs= paste(unique(batchID), collapse = ", "), students = max(pcount, na.rm=T)) %>% mutate(dur_hrs = 2 * days, amount = dur_hrs * 1500) %>% clipr::write_clip(.)
+cdoneS2
+sum(cdoneS1$duration)
+(hrs = sum(cdoneS1$duration)/60)
 cat("Total hours of classes:", hrs, "\n and amount " , hrs*1500 , " INR")
