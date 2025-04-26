@@ -1,9 +1,9 @@
 #M2 Data Collection - NGT
 
 # Load necessary libraries
-pacman::p_load(tidyr, googlesheets4, tidytext)
+pacman::p_load(tidyr, googlesheets4, tidyverse, tidytext)
 
-#gsDC = '1MA6sNaJHKtpPo5wp1om7ta4L3EZp_oT6CGQLWWqr-00'
+# when u run this, it will ask for authentication
 gsDC ='1UT9jwVx6XNCBz6bjC2Qf3MCYMpWmgKbPPklP255h56k'
 sheet_names(gsDC)
 
