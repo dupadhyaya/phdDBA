@@ -1,7 +1,5 @@
 #likert package - another way
-
-library(likert)
-library(ggplot2)
+pacman::p_load(likert, tidyverse)
 
 # Example: assume sData2 contains Likert responses across multiple items grouped by category
 # Make sure your items are factors with ordered levels

@@ -17,6 +17,7 @@ psych::headTail(df1B)
 table(df1B$oRating)
 (XT = xtabs( ~ oRating, data=df1B))
 prop.table(XT)
+dim(df1B)
 
 df1B %>% group_by(oRating) %>% summarise(n=n()) %>% ggplot(., aes(x=oRating, y=n, fill=oRating)) + geom_bar(stat="identity") + geom_text(aes(label=n)) + theme_minimal() + labs(title="Rating of Mr. Dhiraj's Students", x="Rating", y="Frequency") + scale_fill_brewer(palette="Set1") + scale_y_continuous(breaks = scales::breaks_pretty())
 
@@ -26,8 +27,10 @@ df1B %>% ggplot(., aes(x='', y=rating)) + geom_boxplot() + geom_jitter( aes(colo
 library(HH)
 #https://cran.r-project.org/web/packages/HH/HH.pdf
 head(df1B)
+
 data(ProfChal)
-head(ProfChal)
+dim(ProfChal)
+head(ProfChal,2)
 likert(Question ~ . , ProfChal[ProfChal$Subtable=="Employment sector",], main='Is your job professionally challenging?', ylab=NULL, sub="This plot looks better in a 9in x 4in window.")
 
 
@@ -41,13 +44,14 @@ likert(Question ~ . , ProfChal[ProfChal$Subtable=="Employment sector",],
 ## formula method
 data(NZScienceTeaching)
 head(NZScienceTeaching)
-?likert(Question ~ . | Subtable, data=NZScienceTeaching, ylab=NULL, scales=list(y=list(relation="free")), layout=c(1,2))
+likert(Question ~ . | Subtable, data=NZScienceTeaching, ylab=NULL, scales=list(y=list(relation="free")), layout=c(1,2))
 
 ?likert
 ## formula notation with expanded right-hand-side
 likert(Question ~  "Strongly disagree" + Disagree + Neutral + Agree + "Strongly agree" | Subtable, data=NZScienceTeaching,   ylab=NULL,   scales=list(y=list(relation="free")), layout=c(1,2))
-
+head(NZScienceTeaching)
 NZScienceTeachingLong <- reshape2::melt(NZScienceTeaching, id.vars=c("Question", "Subtable"))
+head(NZScienceTeachingLong)
 names(NZScienceTeachingLong)[3] <- "Agreement"
 head(NZScienceTeachingLong)
 likert(Question ~ Agreement | Subtable, value="value", data=NZScienceTeachingLong, ylab=NULL, scales=list(y=list(relation="free")), layout=c(1,2))
@@ -68,14 +72,17 @@ names(Responses) <- c("Strongly Disagree", "Disagree", "No Opinion",
 likert(Responses, main="Retail-R-Us offers the best everyday prices.",
        sub="This plot looks better in a 9in x 2.6in window.")
 
-likert(Responses, horizontal=FALSE,
-       aspect=1.5,
+likert(Responses, horizontal=FALSE, aspect=1,
        main="Retail-R-Us offers the best everyday prices.",
-       auto.key=list(space="right", columns=1,
-                     reverse=TRUE, padding.text=2),
+       auto.key=list(space="left", columns=2, reverse=F, padding.text=5),
        sub="This plot looks better in a 4in x 3in window.")
 
 data(AudiencePercent)
+head(AudiencePercent)
+class(AudiencePercent)
+str(AudiencePercent)
+AudiencePercent
+likert(AudiencePercent)
 likert(AudiencePercent,
        auto.key=list(between=1, between.columns=2),
        xlab=paste("Percentage of audience younger than 35 (left of zero)",
@@ -85,18 +92,10 @@ likert(AudiencePercent,
        sub="This plot looks better in a 7in x 3.5in window.")
 
 data(USAge.table)
-USA79 <- USAge.table[75:1, 2:1, "1979"]/1000000
-PL <- likert(USA79,
-             main="Population of United States 1979 (ages 0-74)",
-             xlab="Count in Millions",
-             ylab="Age",
-             scales=list(
-               y=list(
-                 limits=c(0,77),
-                 at=seq(1,76,5),
-                 labels=seq(0,75,5),
-                 tck=.5))
-)
+head(USAge.table)
+USA79 <- USAge.table[75:1, 2:1, "1979"]/1000000 #rev order
+head(USA79,5)
+PL <- likert(USA79, main="Population of United States 1979 (ages 0-74)", xlab="Count in Millions", ylab="Age", scales=list( y=list( limits=c(0,77), at=seq(1,76,5), labels=seq(0,75,5), tck=.5)))
 PL
 as.pyramidLikert(PL)
 likert(USAge.table[75:1, 2:1, c("1939","1959","1979")]/1000000,
@@ -115,15 +114,16 @@ likert(USAge.table[75:1, 2:1, c("1939","1959","1979")]/1000000,
 
 Pop <- rbind(a=c(3,2,4,9), b=c(6,10,12,10))
 dimnames(Pop)[[2]] <- c("Very Low", "Low", "High", "Very High")
+Pop
 likert(as.listOfNamedMatrices(Pop),
        as.percent=TRUE,
        resize.height="rowSums",
        strip=FALSE,
-       strip.left=FALSE,
-       main=paste("Area and Height are proportional to 'Row Count Totals'.",
-                  "Width is exactly 100%.", sep="\n"))
+       strip.left=F,
+       main=paste("Area and Height are proportional to 'Row Count Totals'.",  "Width is exactly 100%.", sep="\n"))
 
 data(ProfChal)
-likertMosaic(Question ~ . | Subtable, ProfChal, main="Is your job professionally challenging?")
+ProfChal
+?likertMosaic(Question ~ . | Subtable, ProfChal, main="Is your job professionally challenging?")
 
 LikertPercentCountColumns(Question ~ . | Subtable, ProfChal, layout=c(1,6), scales=list(y=list(relation="free")),  ylab=NULL, between=list(y=0), strip.left=strip.custom(bg="gray97"), strip=FALSE, par.strip.text=list(cex=.7), main="Is your job professionally challenging?")
