@@ -21,3 +21,4 @@ imp = c(1:6)
 (dfImp <- data.frame(idea = ino, P1= sample(imp,6), P2 = sample(imp,6),  P3 = sample(imp,6), P4= sample(imp,6), P5 = sample(imp,6), P6 = sample(imp,6)))
 
 dfImp %>% pivot_longer(cols=P1:P6, names_to='PN') %>% pivot_wider(names_from='idea', values_from = 'value') %>% clipr::write_clip(.)
+
