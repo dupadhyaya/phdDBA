@@ -1,4 +1,4 @@
-# Hypothesis Test
+# Hypothesis Test 01/6/25
 
 # This code simulates a scenario where students are divided into two groups:
 # Set seed for reproducibility
@@ -12,9 +12,7 @@ group <- sample(c("AI_Tool", "NoAI_Tool"), size = n, replace = TRUE)
 
 # Generate scores using different normal distributions
 # AI Tool users have slightly higher mean score
-score <- ifelse(group == "AI Tool",
-                rnorm(n, mean = 85, sd = 10),   # Mean 75, SD 10
-                rnorm(n, mean = 68, sd = 10))   # Mean 68, SD 10
+score <- ifelse(group == "AI Tool",  rnorm(n, mean = 85, sd = 10),  rnorm(n, mean = 68, sd = 10))   # Mean 75, SD 10  #  Mean 68, SD 10
 
 score
 range(score)
@@ -25,10 +23,7 @@ score
 
 # Create a data frame with group and score
 # Create data frame
-data1 <- data.frame( student = paste0("Student_", 1:n),
-  group = group,
-  exam_Score = round(score, 1)
-)
+data1 <- data.frame( student = paste0("Student_", 1:n), group = group, exam_Score = round(score, 1))
 # Display the first few rows of the data frame
 head(data1)
 
@@ -36,6 +31,7 @@ data1 %>% group_by(group) %>%  summarise(mean_score = mean(exam_Score), sd_score
 
 # Perform a t-test to compare the means of the two groups
 t_test_result <- t.test(exam_Score ~ group, data = data1)
+# the 2 means are not same. AI & noAI mean scores are different
 # Display the t-test result
 t_test_result
 
@@ -63,11 +59,10 @@ gender <- sample(c("Male", "Female"), size = n, replace = TRUE)
 before_scores <- rnorm(n, mean = 65, sd = 8)
 
 # Generate 'After AI' scores with improvement based on group
-after_scores <- ifelse(
-  group == "AI_Tool",
+after_scores <- ifelse(  group == "AI_Tool",
   before_scores + rnorm(n, mean = 8, sd = 5),  # More improvement
-  before_scores + rnorm(n, mean = 3, sd = 5)   # Less improvement
-)
+  before_scores + rnorm(n, mean = 3, sd = 5))   # Less improvement
+
 after_scores
 
 # Clip scores between 0 and 100
@@ -91,7 +86,7 @@ data2 <- data.frame(
 head(data2)
 
 #Hypothesis
-#• Paired t-test:  t.test(Before_AI_Score, After_AI_Score, paired=TRUE)
+# Paired t-test:  t.test(Before_AI_Score, After_AI_Score, paired=TRUE)
 # Paired t-test (Before vs. After AI tool usage)
 aiData <- subset(data2, group == 'AI_Tool')
 head(aiData)
@@ -137,3 +132,9 @@ summary(anova_result)
 library(car)
 leveneTest(after_AI_Score ~ group, data = data2)
 #interpret the results with ChatGPT
+
+TukeyHSD(anova_result)
+
+anova_result2 <- aov(after_AI_Score ~ group + gender + gender:group, data = data2)
+summary(anova_result2)
+TukeyHSD(anova_result2)

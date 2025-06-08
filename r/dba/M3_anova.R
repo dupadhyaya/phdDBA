@@ -4,14 +4,14 @@ pacman::p_load(tidyverse, multcomp, car)
 
 #1-wayANOVA----- Example: 3 teaching method
 set.seed(103)
-method <- factor(rep(c("A", "B", "C"), each = 20))
-score <- c(rnorm(20, 65, 5), rnorm(20, 70, 5), rnorm(20, 68, 5))
+(method <- factor(rep(c("A", "B", "C"), each = 20)))
+(score <- round(c(rnorm(20, 65, 5), rnorm(20, 70, 5), rnorm(20, 68, 5))))
 adata1 <- data.frame(method, score)
 head(adata1)
 
 adata1 %>% group_by(method) %>% summarise(meanScores = mean(score, na.rm=T))
 
-model_1 <- aov(score ~ method, data = adata1)
+model_1 <- aov(score ~ method, data = adata1) #aov
 summary(model_1)
 
 #p < 0.05: At least one group mean is different.
@@ -34,7 +34,7 @@ tukey1
 ###Tips
 #If the confidence interval does NOT include 0, the difference is significant.
 #Adjusted p-values control for Type I error across multiple comparisons.
-#Effect direction matters: “B - A = +5.57” means B > A.
+#Effect direction matters: “B - A = +5.55” means B > A.
 
 #othercomparisons
 pacman::p_load(multcompView)
@@ -51,15 +51,19 @@ tukey1B
 #----------------------------------------------------------
 #2-wayANOVA------ Example: Gender and Method on Score
 set.seed(104)
-method <- factor(rep(c("A", "B"), times = 30))
-gender <- factor(rep(c("M", "F"), each = 15, times = 2))
-score <- rnorm(60, mean=70, sd=4) + ifelse(method=="B", 3, 0) + ifelse(gender=="F", 2, 0)
+(method <- factor(rep(c("A", "B"), times = 30)))
+table(method)
+(gender <- factor(rep(c("M", "F"), each = 15, times = 2)))
+score <- round(rnorm(60, mean=70, sd=4) + ifelse(method=="B", 3, 0) + ifelse(gender=="F", 2, 0))
 adata2 <- data.frame(method, gender, score)
 head(adata2)
+dim(adata2)
 
-model_2 <- aov(score ~ method * gender, data = adata2)
+adata2 %>% group_by(method, gender) %>% summarise(meanMarks = mean(score, na.rm=T)) %>% arrange(meanMarks)
+model_2 <- aov(score ~ method * gender, data = adata2) #2way anova
 summary(model_2)
 
+TukeyHSD(model_2)
 #Main effects of each factor
 #Interaction effect (gender × method): If significant, the effect of one factor depends on the level of the other
 with(adata2, interaction.plot(method, gender, score, fun=mean, main='Interaction Plot : Method - Gender'))
