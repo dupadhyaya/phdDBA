@@ -1,6 +1,6 @@
 # gglikert
 
-remotes::install_github("larmarange/gglikert")
+#remotes::install_github("larmarange/gglikert")
 pacman::p_load(tidyverse, ggstats, ggstatsplot, gestate)
 
 #data
@@ -40,3 +40,4 @@ mtcars %>% mutate(am = paste('Tx-', factor(am, labels=c('Auto', 'Manual'))), cyl
 
 
 ggplot2::mpg |>  ggcascade(all = TRUE, recent = year > 2000, "recent & economic" = year > 2000 & displ < 3, .by = cyl,    .ncol = 3, .arrows = FALSE,.text_size = 3 )
+

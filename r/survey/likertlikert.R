@@ -1,5 +1,5 @@
 #likert package - another way
-pacman::p_load(likert, tidyverse)
+pacman::p_load(likert, tidyverse, scales)
 
 # Example: assume sData2 contains Likert responses across multiple items grouped by category
 # Make sure your items are factors with ordered levels
